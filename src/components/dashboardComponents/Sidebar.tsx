@@ -2,9 +2,9 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { DropdownItem } from "./DropdownItem";
-
+import { FaFacebookF, FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 interface SidebarProps {
- menuItems: {
+  menuItems: {
     label: string;
     href?: string;
     children?: { label: string; href: string }[];
@@ -18,6 +18,11 @@ export default function Sidebar({
   isSidebarOpen,
   closeSidebar,
 }: SidebarProps) {
+  const socialLinks = [
+    { icon: FaFacebookF, link: "https://facebook.com", label: "Facebook" },
+    { icon: FaGithub, link: "https://github.com", label: "GitHub" },
+    { icon: FaLinkedinIn, link: "https://linkedin.com", label: "LinkedIn" },
+  ];
   return (
     <>
       {/* Desktop */}
@@ -27,52 +32,67 @@ export default function Sidebar({
             <DropdownItem key={item.label} item={item} />
           ))}
         </nav>
-        {/* Footer */}
-        <div className="p-4 border-t border-gray-200 text-center text-xs text-gray-600">
-          © 2025 <span className="font-bold text-[#1B473A]">Briz System</span>
-          <p className="text-[10px]">Versión 1.0.0</p>
+        {/* Redes sociales al final */}
+        <div className="flex items-center gap-4 p-8  justify-center">
+          {socialLinks.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <a
+                key={idx}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.label}
+                className="text-gray-500 hover:text-[#D59D31] transition-colors duration-300 text-lg"
+              >
+                <Icon size={18} />
+              </a>
+            );
+          })}
         </div>
+
+
       </aside>
 
       {/* Mobile */}
-<AnimatePresence>
-  {isSidebarOpen && (
-    <>
-      <motion.aside
-        initial={{ x: -250 }}
-        animate={{ x: 0 }}
-        exit={{ x: -250 }}
-        transition={{ type: "tween", duration: 0.25 }}
-        className="fixed lg:hidden top-0 left-0 w-64 h-full bg-white border-r border-gray-200 shadow-xl z-40 flex flex-col"
-      >
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <>
+            <motion.aside
+              initial={{ x: -250 }}
+              animate={{ x: 0 }}
+              exit={{ x: -250 }}
+              transition={{ type: "tween", duration: 0.25 }}
+              className="fixed lg:hidden top-0 left-0 w-64 h-full bg-white border-r border-gray-200 shadow-xl z-40 flex flex-col"
+            >
 
-        {/* Menu */}
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {menuItems.map((item) => (
-            <DropdownItem
-              key={item.label}
-              item={item}
+              {/* Menu */}
+              <nav className="mt-20 flex-1 overflow-y-auto p-4 space-y-2">
+                {menuItems.map((item) => (
+                  <DropdownItem
+                    key={item.label}
+                    item={item}
+                    onClick={closeSidebar}
+                  />
+                ))}
+              </nav>
+
+              {/* Footer */}
+              <div className="p-4 border-t border-gray-200 text-center text-xs text-gray-600">
+                © 2025 <span className="font-bold text-[#1B473A]">Briz System</span>
+                <p className="text-[10px]">Versión 1.0.0</p>
+              </div>
+
+            </motion.aside>
+
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-20"
               onClick={closeSidebar}
             />
-          ))}
-        </nav>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-gray-200 text-center text-xs text-gray-600">
-          © 2025 <span className="font-bold text-[#1B473A]">Briz System</span>
-          <p className="text-[10px]">Versión 1.0.0</p>
-        </div>
-
-      </motion.aside>
-
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-20"
-        onClick={closeSidebar}
-      />
-    </>
-  )}
-</AnimatePresence>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

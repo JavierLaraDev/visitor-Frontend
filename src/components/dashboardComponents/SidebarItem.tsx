@@ -13,38 +13,37 @@ export default function SidebarItem({ item, onClick }: SidebarItemProps) {
   const pathname = usePathname();
   const isActive = pathname === item.href;
   const Icon =
-  item.label.includes("Usuario") ? FaUsers :
-  item.label.includes("Visitante") ? FaUserTie :
-  item.label.includes("Reporte") ? FaChartBar :
-  item.label.includes("Pasante") ? FaUserGraduate :
-  item.label.includes("Perfil") ? FaUser :
-  FaHome;
+    item.label.includes("Users") ?  FaUserTie :
+      item.label.includes("Visitors") ? FaUsers :
+        item.label.includes("Reporte") ? FaChartBar :
+          item.label.includes("Pasante") ? FaUserGraduate :
+            item.label.includes("Perfil") ? FaUser :
+              FaHome;
 
 
   return (
     <Link
       href={item.href}
       onClick={onClick}
-      className={`group flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${
-        isActive
-          ? "bg-[#1B473A] text-white shadow-md scale-[1.02]"
-          : "text-gray-700 hover:bg-gray-50 hover:text-[#1B473A]"
-      }`}
+      className={`group flex items-center gap-3 px-4 py-3 rounded-lg font-medium relative transition-all
+    ${isActive ? "text-emerald-700" : "text-gray-700 hover:text-emerald-700"}
+  `}
     >
-      <div
-        className={`p-2 rounded-lg ${
-          isActive
-            ? "bg-[#D59D31]"
-            : "bg-gray-100 group-hover:bg-[#D59D31] group-hover:text-white"
-        }`}
-      >
-        <Icon
-          className={`text-base ${
-            isActive ? "text-white" : "text-[#1B473A] group-hover:text-white"
-          }`}
-        />
+
+      {/* Línea lateral */}
+      <span
+        className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-md transition-all
+      ${isActive ? "bg-emerald-600" : "bg-transparent group-hover:bg-emerald-500"}
+    `}
+      />
+
+      {/* Icono */}
+      <div className="p-2 rounded-lg ">
+        <Icon className={`text-base ${isActive ? "text-[#D59D31]" : "text-[#1B473A] group-hover:text-[#D59D31]"}`} />
       </div>
+
       <span className="text-sm font-semibold">{item.label}</span>
     </Link>
+
   );
 }

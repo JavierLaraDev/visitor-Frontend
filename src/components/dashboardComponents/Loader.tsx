@@ -1,15 +1,39 @@
+import Image from "next/image";
+
 export default function Loader() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="relative w-20 h-20">
-        <div className="absolute inset-0 border-4 border-gray-200 rounded-full" />
-        <div className="absolute inset-0 border-4 border-[#D59D31] border-t-transparent rounded-full animate-spin" />
-        <div className="absolute inset-3 bg-[#1B473A] rounded-full flex items-center justify-center">
-          <span className="text-[#D59D31] font-bold text-xl">B</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-green-50">
+
+      {/* Contenedor del spinner */}
+      <div className="relative w-24 h-24 animate-pulse">
+        
+        {/* Anillo externo */}
+        <div className="absolute inset-0 border-4 border-[#D59D31] border-t-transparent rounded-full animate-spin-slow" />
+
+        {/* Anillo interno animado */}
+        <div className="absolute inset-2 border-[3px] border-[#1B473A] border-b-transparent rounded-full animate-spin-reverse" />
+
+        {/* Núcleo (logo/letra) */}
+        <div className="absolute inset-5 bg-[#1B473A] rounded-full shadow-lg flex items-center justify-center">
+          <span className="text-white font-extrabold text-2xl tracking-wide">
+            <Image
+                          src="/LOGO.png"
+                          width={55}
+                          height={55}
+                          alt="Logo Facultad"
+                          className="relative rounded-lg opacity-95"
+                        />
+          </span>
         </div>
       </div>
-      <p className="mt-6 text-[#1B473A] font-bold text-lg">Briz System</p>
-      <p className="text-gray-500 text-sm mt-1">
+
+      {/* Título */}
+      <p className="mt-6 text-[#1B473A] font-extrabold text-xl tracking-wide animate-fade-in">
+        Sistema de Administración
+      </p>
+
+      {/* Subtítulo */}
+      <p className="text-gray-600 text-sm mt-1 animate-fade-in animation-delay-300">
         Cargando panel administrativo...
       </p>
     </div>
