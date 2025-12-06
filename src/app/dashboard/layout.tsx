@@ -3,10 +3,10 @@
 import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "./footer";
-import { useDashboard } from "@/src/features/dashboard/useDashboard";
+import { useAuth} from "@/src/features/auth/useAuth";
 import Loader from "@/src/components/dashboardComponents/Loader";
 import Sidebar from "@/src/components/dashboardComponents/Sidebar";
-import DashboardHeader from "@/src/components/dashboardComponents/DashboardHeader";
+import NavbarHeader from "@/src/components/dashboardComponents/NavbarHeader";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const {
@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     isSidebarOpen,
     setIsSidebarOpen,
     handleLogout,
-  } = useDashboard();
+  } = useAuth();
 
   const router = useRouter();
 
@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       />
 
       {/* HEADER */}
-      <DashboardHeader
+      <NavbarHeader
         user={user}
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}

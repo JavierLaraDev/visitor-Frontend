@@ -10,7 +10,7 @@ interface HeaderProps {
   handleLogout: () => void;
 }
 
-export default function DashboardHeader({ user, isSidebarOpen, toggleSidebar, handleLogout }: HeaderProps) {
+export default function NavbarHeader({ user, isSidebarOpen, toggleSidebar, handleLogout }: HeaderProps) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [hasNotifications, setHasNotifications] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);

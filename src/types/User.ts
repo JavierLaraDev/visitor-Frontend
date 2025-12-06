@@ -20,3 +20,8 @@ export interface CreateUser {
   major: string;
   status: string;
 }
+export interface AuthUser {
+  id: number;
+  email: string;
+  role: "ADMIN" | "PASANTE";
+}

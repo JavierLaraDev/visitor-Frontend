@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../auth/query";
+import { useAuthMe } from "./query";
 import api from "../../lib/api";
 
-export const useDashboard = () => {
-  const { data: user, isLoading, error } = useAuth();
+export const useAuth = () => {
+  const { data: user, isLoading, error } = useAuthMe();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import api from "../../lib/api";
 import { useQuery } from "@tanstack/react-query";
+import { AuthUser } from "@/src/types/User";
 
 
 interface UserData {
@@ -17,17 +18,18 @@ export const useLogin = ()=>{
     })
 }
 // 👤 Obtener usuario autenticado (desde cookie)
-export const useAuth = () => {
-  return useQuery({
+export const useAuthMe = () => {
+  return useQuery<AuthUser>({
     queryKey: ["authUser"],
     queryFn: async () => {
-      const { data } = await api.get("/auth/me"); // tu backend devuelve {id, email, role}
+      const { data } = await api.get("/auth/me");
       return data;
     },
-    retry: false, // evita bucles si no hay sesión
-    staleTime: 1000 * 60 * 5, // cachea 5 minutos
+    retry: false,
+    staleTime: 1000 * 60 * 5,
   });
 };
+
 
 export const useLogout = () => {
   return useMutation({
