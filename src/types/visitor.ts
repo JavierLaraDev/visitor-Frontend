@@ -20,3 +20,4 @@ export interface Visitor {
   registeredById: number;     // viene del backend
   createdAt: string;          // ISO date string
 }
+
