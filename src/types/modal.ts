@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Visitor } from "./visitor";
 
 export interface Props {
   isOpen: boolean;
@@ -16,4 +17,13 @@ export interface DeleteUserModalProps {
   user: any;
   onConfirm: () => void;
   onCancel: () => void;
+}
+
+export type AddVisitorPayload = Omit<
+Visitor, "id" | "registeredById" | "createdAt">;
+
+export interface AddVisitorModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: AddVisitorPayload) => Promise<void>;
 }

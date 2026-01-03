@@ -2,7 +2,7 @@ export default function FooterVisitor() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="ml-0 md:ml-64 w-full md:w-[calc(100%-16rem)] bg-white border-t border-gray-300 shadow-inner">
+    <footer className=" w-full bg-white border-t border-gray-300 shadow-inner">
       <div className="py-3 md:py-5 flex flex-col items-center gap-2">
         
         {/* Logo */}

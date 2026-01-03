@@ -35,7 +35,7 @@ export default function InternLayout({ children }: { children: ReactNode }) {
          <NavbarHeader user={user} isSidebarOpen={false} toggleSidebar={() => {}} handleLogout={handleLogout} />
     
           {/* CONTENIDO PRINCIPAL */}
-          <main className="flex-1 overflow-y-auto p-6 lg:p-10 mt-20 lg:mt-0 lg:ml-64">
+          <main className="flex-1 overflow-y-auto p-6 lg:p-10 mt-20 lg:mt-0 ">
             {children}
           </main>
     
