@@ -73,31 +73,7 @@ export default function NavbarHeader({ user, isSidebarOpen, toggleSidebar, handl
           </div>
         </div>
       </div>
-      {/* RIGHT Search Bar */}
-      <div className="hidden md:flex items-center">
-        <div className="bg-[#1B473A]/50 px-4 py-1 rounded-md border border-[#D59D31]/20 
-              flex items-center gap-2 w-85 backdrop-blur-sm">
-
-          <input
-            type="text"
-            placeholder="Search"
-            className="bg-transparent text-white placeholder-white/60 
-               w-full focus:outline-none text-sm"
-          />
-
-          {/* Botón de búsqueda */}
-          <button
-            className="p-2 rounded-md hover:transition-all duration-200 active:scale-95"
-            aria-label="Search"
-          >
-            <FaSearch className="text-white/80 hover:text-white hover:scale-110 transition-transform duration-200" size={15} />
-          </button>
-        </div>
-      </div>
-
-
-
-
+      
       {/* RIGHT SECTION: Notifications + User Menu */}
       <div className="flex items-center gap-2 lg:gap-4 flex-1 justify-end">
 

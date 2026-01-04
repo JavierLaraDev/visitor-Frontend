@@ -27,3 +27,10 @@ export interface AddVisitorModalProps {
   onClose: () => void;
   onSubmit: (data: AddVisitorPayload) => Promise<void>;
 }
+
+export interface DeleteVisitorModalProps {
+  isOpen: boolean;
+  visitor: Visitor | null;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
