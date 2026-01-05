@@ -1,6 +1,6 @@
 
 import api from '@/src/lib/api'
-import { Visitor } from '@/src/types/visitor';
+import { AttentionStatus, Visitor } from '@/src/types/visitor';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useCreateVisitor = ()=>{
@@ -22,7 +22,9 @@ export const useGetVisitors = () => {
     queryFn:async ()=>{
         const {data}=await api.get('/visitors')
         return data;
-    }
+    },
+    refetchInterval: 5000, // Refetch every 5 seconds
+    refetchOnWindowFocus: true, // Refetch when window gains focus
   })
 }
 
@@ -49,4 +51,25 @@ export const useDeleteVisitor=()=>{
             queryClient.invalidateQueries({queryKey:['visitors']});
         },
     });
+};
+export const useUpdateVisitorStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      status,
+    }: {
+      id: number;
+      status: AttentionStatus;
+    }) => {
+      const response = await api.patch(`/visitors/${id}/status`, {
+        status,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["visitors"] });
+    },
+  });
 };

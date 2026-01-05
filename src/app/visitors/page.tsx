@@ -4,19 +4,20 @@ import { useState } from "react";
 import { Search, Edit, Trash2, Plus } from "lucide-react";
 import type { Visitor } from "@/src/types/visitor";
 
-import { useGetVisitors, useCreateVisitor } from "@/src/features/visitors/query";
+import { useGetVisitors, useCreateVisitor, useUpdateVisitor } from "@/src/features/visitors/query";
 import { useDeleteVisitorModal } from "@/src/features/visitors/useDeleteVisitorModal";
 import { useVisitorSearchFilter } from "@/src/features/visitors/useVisitorSearchFilter";
 
 import AddVisitorModal from "@/src/components/visitors/AddVisitorModal";
 import DeleteVisitorModal from "@/src/components/visitors/DeleteVisitorModal";
 import CustomSelectVisitorStatus from "@/src/components/visitors/CustomSelectStatus";
+import EditVisitorModal from "@/src/components/visitors/EditVisitorModal";
 
 export default function VisitorsPage() {
   /* ===================== DATA ===================== */
   const { data: visitors = [], isLoading } = useGetVisitors();
   const createMutation = useCreateVisitor();
-
+  const updateMutation = useUpdateVisitor();
   /* ===================== FILTERS ===================== */
   const {
     searchTerm,
@@ -36,11 +37,23 @@ export default function VisitorsPage() {
     confirmDelete,
     cancelDelete,
   } = useDeleteVisitorModal();
+  const [showEditVisitor, setShowEditVisitor] = useState(false);
+  const [visitorToEdit, setVisitorToEdit] = useState<Visitor | null>(null);
 
+  const openEditModal = (visitor: Visitor) => {
+    setVisitorToEdit(visitor);
+    setShowEditVisitor(true);
+  }
   /* ===================== CREATE ===================== */
   const handleCreateVisitor = async (data: Partial<Visitor>) => {
     await createMutation.mutateAsync(data);
     setShowAddVisitor(false);
+  };
+  const handleEditSubmit = async (data: Partial<Visitor>) => {
+    if (!visitorToEdit) return;
+    await updateMutation.mutateAsync({ id: visitorToEdit.id, data });
+    setShowEditVisitor(false);
+    setVisitorToEdit(null);
   };
 
   /* ===================== UI HELPERS ===================== */
@@ -138,7 +151,7 @@ export default function VisitorsPage() {
                   key={v.id}
                   className="hover:bg-gray-50 transition-colors"
                 >
-                  <td className="px-6 py-4 font-medium">
+                  <td className="px-6 py-4 text-sm text-gray-700">
                     {v.firstName} {v.middleName ?? ""}{" "}
                     {v.lastName} {v.secondLastName ?? ""}
                   </td>
@@ -161,7 +174,7 @@ export default function VisitorsPage() {
                     {v.reason}
                   </td>
 
-                  <td className="px-6 py-4">
+                  <td className="px-3 py-4">
                     <span
                       className={`px-3 py-1 text-xs font-semibold rounded-full ${statusColors[v.status]}`}
                     >
@@ -173,7 +186,7 @@ export default function VisitorsPage() {
                     {new Date(v.createdAt).toLocaleDateString()}
                   </td>
 
-                  <td className="px-6 py-4 flex justify-end gap-3">
+                  <td onClick={() => openEditModal(v)} className="px-6 py-4 flex justify-end gap-3">
                     <button className="text-[#D59D31] hover:text-[#c68c2c]">
                       <Edit size={18} />
                     </button>
@@ -198,6 +211,17 @@ export default function VisitorsPage() {
         onClose={() => setShowAddVisitor(false)}
         onSubmit={handleCreateVisitor}
       />
+
+      {showEditVisitor && visitorToEdit && (
+        <EditVisitorModal
+          visitor={visitorToEdit}
+          onClose={() => {
+            setShowEditVisitor(false);
+            setVisitorToEdit(null);
+          }}
+          onSubmit={handleEditSubmit}
+        />
+      )}
 
       <DeleteVisitorModal
         isOpen={showDeleteModal}

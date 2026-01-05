@@ -150,7 +150,7 @@ const UsersPage = () => {
                 </td>
 
                 {/* Status */}
-                <td className="px-6 py-4">
+                <td className="px-3 py-4">
                   <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                     {user.status}
                   </span>
